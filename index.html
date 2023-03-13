@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Intitulé de ma page</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Sonsie+One" rel="stylesheet" type="text/css">
+    <!-- <my-tag/> is specified in an external file -->
+    <script src="./composant/menu4.riot" type="riot"></script>
+    <!-- include riot.js and the compiler -->
+    <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
 
@@ -15,43 +18,21 @@
 
     <!-- contenu de la page -->
     <main>
-      <button id="connexion">
-        connexion
-      </button>
+      
+  
+      <menu4></menu4>
+  
+    <!-- compile and mount -->
+    <script>
+      (async function main() {
+      await riot.compile()
+  
+        riot.mount('menu4')
+      }())
+    </script>
 
     </main>
-    <script>
-      document.querySelector('#connexion').addEventListener('click',async () => {
-        var result = fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&timezone=Europe%2FBerlin')
-        var data = await fetchResult.json()
-        console.log(result)
-        console.log(data)
-      })
-      let apiKey = '3270490d1cc63f8c1e07f90a4acefacb43a9ef1e28329acc90776dd5'
 
-let model = {
-	getMovies(search){
-		return new Promise((resolve, reject) => {
-			let url = `http://www.omdbapi.com/?apikey=${apiKey}&s=${search}`
-			let xhr = new XMLHttpRequest()
-
-			xhr.open('GET', url)
-      
-			xhr.addEventListener("load", () => {
-				console.log(JSON.parse(xhr.responseText))
-				resolve(JSON.parse(xhr.responseText)['Search'])
-			})
-
-
-			xhr.send()
-		})
-	}
-}
-
-export default model
-
-      
-    </script>
     <!-- pied de page  -->
     <footer>
       <p>©Copyright Félix Brinet Baptiste Nevejans / Tous droits reversés.</p>
