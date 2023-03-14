@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <title>Intitulé de ma page</title>
     <!-- <my-tag/> is specified in an external file -->
+    <script src="./composant/formation.riot" type="riot"></script>
     <script src="./composant/menu4.riot" type="riot"></script>
     <!-- include riot.js and the compiler -->
     <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/default.css">
   </head>
 
   <body>
@@ -19,17 +20,23 @@
     <!-- contenu de la page -->
     <main>
       
-  
+
+      <formation>
+        
+      </formation>
+
       <menu4></menu4>
   
     <!-- compile and mount -->
+
     <script>
       (async function main() {
       await riot.compile()
-  
-        riot.mount('menu4')
+        riot.mount('formation')
       }())
     </script>
+
+
 
     </main>
 
