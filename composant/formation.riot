@@ -1,7 +1,7 @@
 <formation>
 <table class="table is-fullwidth is-hoverable">
 				<tbody>
-					<tr>
+					<tr >
 						<th></th>
 						<th></th>
                     </tr>
@@ -17,6 +17,9 @@ async function formation (){
     let resultats = await result.json()
     console.log(result)
     console.log(resultats)
+    let base[]
+    let filieretable[]
+    let filieredetail[] 
 
     let table = resultats["facet_groups"][0]["facets"]
     console.log(table)
