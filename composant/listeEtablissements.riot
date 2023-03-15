@@ -1,5 +1,6 @@
 <listeEtablissements>
-			<table class="table is-fullwidth is-hoverable">
+	<div id="container">
+			<table id="tableeta" class="table is-fullwidth is-hoverable">
 				<thead>
 					<tr>
 						<th id="pos"><abbr title="nom">Nom</abbr><a id="sortn" href="#"><span  class="icon"><i class="fas fa-sort"></i></span></a></th>
@@ -9,26 +10,25 @@
 						<th><abbr title="selectivite">Sélectivité</abbr><a id="sorts" href="#"><span  class="icon"><i class="fas fa-sort"></i></span></a></th>
 					</tr>
 				</thead>
+				<tbody></tbody>
 			</table>
-	
+		</div>
 	<script>
 		async function listeEtablissements (){			
         var result = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=-nb_voe_pp&refine.lib_for_voe_ins=BTS+-+Services+-+Gestion+de+la+PME&timezone=Europe%2FBerlin')
         var data = await result.json()
 		// Récupération des données de noms, villes, département, moyenne des admis, et selectivité de la formation sélectionnée
-    	let table = data["records"][0]["fields"]
+		let table = data["records"][0]["fields"]
 		// Debugging 
-    	console.log(table)
+		console.log(table)
         console.log(result)
         console.log(data)
-		}
+		
 	
-	
-	// Récupération du corps de la table dans le DOM
 	const tableBody = document.querySelector("tbody");
 	
 	// Boucle sur les éléments de 
-	for (item of table) {
+	for (item of table.g_ea_lib_vx) {
 		console.log("boucle execute")
 	  // Création d'une ligne de table
 	  const tableRow = document.createElement("tr");
@@ -51,21 +51,22 @@
 	  dpt.appendChild(dptval);
 	  tableRow.appendChild(dpt);
 	  
-	//   // Colonne 4: moyenne
-	//   const moyenne = document.createElement("td");
-	//   const moyenneval = document.createTextNode(item.dep);
-	//   moyenne.appendChild(moyenneval);
-	//   tableRow.appendChild(moyenne);
+	  // Colonne 4: moyenne
+	  const moyenne = document.createElement("td");
+	  const moyenneval = document.createTextNode(item.dep);
+	  moyenne.appendChild(moyenneval);
+	  tableRow.appendChild(moyenne);
 	  
-	//   //Colonne 5: selectivite
-	//   const selectivite = document.createElement("td");
-	//   const selectiviteval = document.createTextNode(item.dep);
-	//   selectivite.appendChild(selectiviteval);
-	//   tableRow.appendChild(selectivite);
+	  //Colonne 5: selectivite
+	  const selectivite = document.createElement("td");
+	  const selectiviteval = document.createTextNode(item.dep);
+	  selectivite.appendChild(selectiviteval);
+	  tableRow.appendChild(selectivite);
 
 	  tableBody.appendChild(tableRow)
 
 	}
+}
 
 
 	export default{
