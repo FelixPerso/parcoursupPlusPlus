@@ -15,7 +15,6 @@
 		async function listeEtablissements (){			
         var result = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=-nb_voe_pp&refine.lib_for_voe_ins=BTS+-+Services+-+Gestion+de+la+PME&timezone=Europe%2FBerlin')
         var data = await result.json()
-
 		// Récupération des données de noms, villes, département, moyenne des admis, et selectivité de la formation sélectionnée
     	let table = data["records"][0]["fields"]
 		// Debugging 
@@ -77,4 +76,4 @@
 	
 
     </script>
-</listeEtablissement>
+</listeEtablissements>
