@@ -15,51 +15,50 @@
 		</div>
 	<script>
 		async function listeEtablissements (){			
-        var result = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=-nb_voe_pp&refine.lib_for_voe_ins=BTS+-+Services+-+Gestion+de+la+PME&timezone=Europe%2FBerlin')
-        var data = await result.json()
+        let result = await fetch('https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=-nb_voe_pp&refine.lib_for_voe_ins=BTS+-+Services+-+Gestion+de+la+PME&timezone=Europe%2FBerlin')
+        let data = await result.json()
 		// Récupération des données de noms, villes, département, moyenne des admis, et selectivité de la formation sélectionnée
-		let table = data["records"][0]["fields"]
+		let table = data["records"]
 		// Debugging 
 		console.log(table)
         console.log(result)
         console.log(data)
-		
-	
 	const tableBody = document.querySelector("tbody");
 	
 	// Boucle sur les éléments de 
-	for (item of table.g_ea_lib_vx) {
+	for(item of table) {
+
 		console.log("boucle execute")
 	  // Création d'une ligne de table
 	  const tableRow = document.createElement("tr");
 	  
 	  // Colonne 1: Nom
 	  const nom = document.createElement("td");
-	  const nomval = document.createTextNode(item.g_ea_lib_vx);
+	  const nomval = document.createTextNode(item.fields.lib_comp_voe_ins);
 	  nom.appendChild(nomval);
 	  tableRow.appendChild(nom);
 	  
 	  // Colonne 2: Ville
 	  const ville = document.createElement("td");
-	  const villeval = document.createElement(item.ville_etab);
+	  const villeval = document.createElement(item.fields.ville_etab);
 	  ville.appendChild(villeval);
 	  tableRow.appendChild(ville);
 	  
 	  // Colonne 3: dpt
 	  const dpt = document.createElement("td");
-	  const dptval = document.createTextNode(item.dep);
+	  const dptval = document.createTextNode(item.fields.dep);
 	  dpt.appendChild(dptval);
 	  tableRow.appendChild(dpt);
 	  
 	  // Colonne 4: moyenne
 	  const moyenne = document.createElement("td");
-	  const moyenneval = document.createTextNode(item.dep);
+	  const moyenneval = document.createTextNode(item.fields.dep);
 	  moyenne.appendChild(moyenneval);
 	  tableRow.appendChild(moyenne);
 	  
 	  //Colonne 5: selectivite
 	  const selectivite = document.createElement("td");
-	  const selectiviteval = document.createTextNode(item.dep);
+	  const selectiviteval = document.createTextNode(item.fields.dep);
 	  selectivite.appendChild(selectiviteval);
 	  tableRow.appendChild(selectivite);
 
