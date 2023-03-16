@@ -1,11 +1,11 @@
 <formation>
 <table class="table is-fullwidth is-hoverable">
-				<tbody>
+				<tbody1>
 					<tr >
 						<th></th>
 						<th></th>
                     </tr>
-                </tbody>
+                </tbody1>
 </table>
 
 <script>
@@ -17,14 +17,14 @@ async function formation (){
     let resultats = await result.json()
     console.log(result)
     console.log(resultats)
-    let base[]
-    let filieretable[]
-    let filieredetail[] 
+    let base=[]
+    let filieretable=[]
+    let filieredetail=[] 
 
     let table = resultats["facet_groups"][0]["facets"]
     console.log(table)
     
-    const tableBody = document.querySelector("tbody")
+    const tableBody = document.querySelector("tbody1")
     for(tes of table){
         const tableRow = document.createElement("tr")
 
