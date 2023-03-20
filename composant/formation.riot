@@ -1,9 +1,9 @@
 <formation>
 <table class="table is-fullwidth is-hoverable">
 				<tbody>
-					<tr >
-						<th></th>
-						<th></th>
+					<tr>
+						<th class="block"></th>
+						<th class="block"></th>
                     </tr>
                 </tbody>
 </table>
@@ -11,17 +11,45 @@
 <script>
 async function formation (){
 
-
-
-    let result = await fetch("https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin")
-    let resultats = await result.json()
+    var avancerrecherche = 0
+    let requete = gettable(avancerrecherche)
+    createtable(avancerrecherche,this.requete)
+}
+    function createtable(avancerrecherche,requete){
+    let result =  fetch(this.requete)
+    let resultats =  result.json()
+    let table
     console.log(result)
     console.log(resultats)
-    let base[]
-    let filieretable[]
-    let filieredetail[] 
 
-    let table = resultats["facet_groups"][0]["facets"]
+    switch(avancerrecherche){
+        case 0 :
+    
+    table = this.resultats["facet_groups"][0]["facets"]
+    console.log(table)
+    
+    const tableBody0 = document.querySelector("tbody")
+    for(tes of table){
+        const tableRow0 = document.createElement("tr")
+
+        const formationCell0 = document.createElement("td")
+        let texteformation = document.createTextNode(tes.name)
+        formationCell.appendChild(texteformation)
+        tableRow.appendChild(formationCell)
+
+        const nombredeplaceCell = document.createElement("td")
+        const nombredeplace = document.createTextNode(tes.count)
+        nombredeplaceCell.appendChild(nombredeplace)
+        tableRow.appendChild(nombredeplaceCell)
+        
+        tableBody.appendChild(tableRow) 
+               
+    }
+    break;
+        case 1 :
+    
+
+    table = this.resultats["facet_groups"][11]["facets"]
     console.log(table)
     
     const tableBody = document.querySelector("tbody")
@@ -38,12 +66,79 @@ async function formation (){
         nombredeplaceCell.appendChild(nombredeplace)
         tableRow.appendChild(nombredeplaceCell)
         
-        tableBody.appendChild(tableRow)        
+        tableBody.appendChild(tableRow)  
+             
     }
-}
+    break; 
+
+    case 2 :
+    
+
+    table = this.resultats["facet_groups"][8]["facets"]
+    console.log(table)
+    
+    const tableBody1 = document.querySelector("tbody")
+    for(tes of table){
+        const tableRow = document.createElement("tr")
+
+        const formationCell = document.createElement("td")
+        let texteformation = document.createTextNode(tes.name)
+        formationCell.appendChild(texteformation)
+        tableRow.appendChild(formationCell)
+
+        const nombredeplaceCell = document.createElement("td")
+        const nombredeplace = document.createTextNode(tes.count)
+        nombredeplaceCell.appendChild(nombredeplace)
+        tableRow.appendChild(nombredeplaceCell)
+        
+        tableBody.appendChild(tableRow)  
+             
+    }
+    break; 
+    }
+    
+
+    
+    }
+
+    function gettable(){
+    let filieretable= ""
+    let filieredetail=""
+    let requete = "https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin"
+        switch(avancerrecherche){
+        case 0 :
+     
+    var avancerrecherche = 0
+    return this.requete
+    break
+
+    case 1:
+    
+    filieretable= "&fili=BUT"
+    let filieredetail="" 
+    var avancerrecherche = 0
+    requete = requete+filieretable
+    return this.requete
+    break
+
+    case 2:
+     
+    filieretable= "&fili=BUT"
+    filieredetail="&form_lib_voe_acc=BUT - Service" 
+    requete = requete+filieretable+filieredetail
+    return this.requete
+    break
+    }
+    }
+    
+     
     export default{
 			onMounted(){
 				formation()
+                gettable()
+                avancerrecherche()
+                
+
             }
     }
 

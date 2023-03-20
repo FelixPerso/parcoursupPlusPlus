@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Intitulé de ma page</title>
     <!-- <my-tag/> is specified in an external file -->
+    <script src="./composant/progressbar.riot" type="riot"></script>
     <script src="./composant/formation.riot" type="riot"></script>
     <script src="./composant/menu4.riot" type="riot"></script>
     <!-- include riot.js and the compiler -->
@@ -31,6 +32,7 @@
     <script>
       (async function main() {
       await riot.compile()
+      riot.mount('formation')
         riot.mount('formation')
       }())
     </script>
