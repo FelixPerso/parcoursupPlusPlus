@@ -1,146 +1,92 @@
 <formation>
-<table class="table is-fullwidth is-hoverable">
-				<tbody>
-					<tr>
-						<th class="block"></th>
-						<th class="block"></th>
-                    </tr>
-                </tbody>
-</table>
+  <aside class="menu">
+    <thead>
+      <tr id="formation">
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </aside>
 
-<script>
-async function formation (){
+  <script>
+    export default {
+      onMounted() {
+        let requete = getRequete(0,null);
+        let resultats = transform(requete);
+        createTable(0, resultats);
+      },
+    };
 
-    var avancerrecherche = 0
-    let requete = gettable(avancerrecherche)
-    createtable(avancerrecherche,this.requete)
-}
-    function createtable(avancerrecherche,requete){
-    let result =  fetch(this.requete)
-    let resultats =  result.json()
-    let table
-    console.log(result)
-    console.log(resultats)
 
-    switch(avancerrecherche){
-        case 0 :
-    
-    table = this.resultats["facet_groups"][0]["facets"]
-    console.log(table)
-    
-    const tableBody0 = document.querySelector("tbody")
-    for(tes of table){
-        const tableRow0 = document.createElement("tr")
 
-        const formationCell0 = document.createElement("td")
-        let texteformation = document.createTextNode(tes.name)
-        formationCell.appendChild(texteformation)
-        tableRow.appendChild(formationCell)
-
-        const nombredeplaceCell = document.createElement("td")
-        const nombredeplace = document.createTextNode(tes.count)
-        nombredeplaceCell.appendChild(nombredeplace)
-        tableRow.appendChild(nombredeplaceCell)
-        
-        tableBody.appendChild(tableRow) 
-               
-    }
-    break;
-        case 1 :
-    
-
-    table = this.resultats["facet_groups"][11]["facets"]
-    console.log(table)
-    
-    const tableBody = document.querySelector("tbody")
-    for(tes of table){
-        const tableRow = document.createElement("tr")
-
-        const formationCell = document.createElement("td")
-        let texteformation = document.createTextNode(tes.name)
-        formationCell.appendChild(texteformation)
-        tableRow.appendChild(formationCell)
-
-        const nombredeplaceCell = document.createElement("td")
-        const nombredeplace = document.createTextNode(tes.count)
-        nombredeplaceCell.appendChild(nombredeplace)
-        tableRow.appendChild(nombredeplaceCell)
-        
-        tableBody.appendChild(tableRow)  
-             
-    }
-    break; 
-
-    case 2 :
-    
-
-    table = this.resultats["facet_groups"][8]["facets"]
-    console.log(table)
-    
-    const tableBody1 = document.querySelector("tbody")
-    for(tes of table){
-        const tableRow = document.createElement("tr")
-
-        const formationCell = document.createElement("td")
-        let texteformation = document.createTextNode(tes.name)
-        formationCell.appendChild(texteformation)
-        tableRow.appendChild(formationCell)
-
-        const nombredeplaceCell = document.createElement("td")
-        const nombredeplace = document.createTextNode(tes.count)
-        nombredeplaceCell.appendChild(nombredeplace)
-        tableRow.appendChild(nombredeplaceCell)
-        
-        tableBody.appendChild(tableRow)  
-             
-    }
-    break; 
-    }
-    
-
-    
+    function getRequete(avancerRecherche,nameformation) {
+      let nameformationdétaillé      
+      let requete =
+"https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&timezone=Europe%2FBerlin"     
+ switch (avancerRecherche) {
+        case 1:
+          requete += "&refine.fili="+nameformation;
+          break;
+        case 2:
+          requete += "&refine.form_lib_voe_acc="+nameformation;
+          break;
+        default:
+          requete = requete;  
+          break;
+      }
+      return requete;
     }
 
-    function gettable(){
-    let filieretable= ""
-    let filieredetail=""
-    let requete = "https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin"
-        switch(avancerrecherche){
-        case 0 :
-     
-    var avancerrecherche = 0
-    return this.requete
-    break
-
-    case 1:
-    
-    filieretable= "&fili=BUT"
-    let filieredetail="" 
-    var avancerrecherche = 0
-    requete = requete+filieretable
-    return this.requete
-    break
-
-    case 2:
-     
-    filieretable= "&fili=BUT"
-    filieredetail="&form_lib_voe_acc=BUT - Service" 
-    requete = requete+filieretable+filieredetail
-    return this.requete
-    break
-    }
-    }
-    
-     
-    export default{
-			onMounted(){
-				formation()
-                gettable()
-                avancerrecherche()
-                
-
-            }
+      async function transform(requete){
+        console.log(requete)
+      let resulatrequete = await fetch(requete);
+      let resultats = await resulatrequete.json();
+      console.log(resultats)
+      return resultats;
     }
 
-</script>
+    async function createTable(avancerRecherche, resultats) {
+      let table = [];
+      switch (avancerRecherche) {
+        case 0:        
+          table = resultats["facet_groups"][0]["facets"];
+          break;
+        case 1:
+          table = resultats["facet_groups"][11]["facets"];
+          break;
+        case 2:
+        //add apparition des autres éléments
+          table = resultats["facet_groups"][8]["facets"];
+          break;
+      }
+      const tableBody = document.querySelector("tbody");
+      for (const tes of table) {
+        const tableRow = document.createElement("tr");
+
+        const formationCell = document.createElement("td");
+        formationCell.textContent = tes.name;
+        tableRow.appendChild(formationCell);
+
+        const nombreDePlaceCell = document.createElement("td");
+        nombreDePlaceCell.textContent = tes.count;
+        tableRow.appendChild(nombreDePlaceCell);
+
+        tableBody.appendChild(tableRow);
+
+        // Ajout de l'événement de clic sur la ligne
+        tableRow.addEventListener("click", () => {
+          avancerRecherche ++
+          let nameformation = tes.name
+          deletetable()
+          requete = getRequete(avancerRecherche,nameformation);
+          createTable(avancerRecherche,requete);
+        })
+      }
+    }
+
+    function deletetable(){
+      tableBody.removeChild(tableRow)
+    }
+  </script>
 </formation>
