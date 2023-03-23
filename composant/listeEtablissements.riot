@@ -1,6 +1,7 @@
 <listeEtablissements>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
 	<div id="container">
-		<table id="tableeta" class="table is-fullwidth is-hoverable">
+		<table id="tableeta" class="table is-striped">
 			<thead>
 				<tr>
 					<th id="pos"><abbr title="nom">Nom</abbr><a id="sortn" href="#"><span class="icon"><i
@@ -9,16 +10,25 @@
 									class="fas fa-sort"></i></span></a></th>
 					<th><abbr title="dpt">Dpt</abbr><a id="sortd" href="#"><span class="icon"><i
 									class="fas fa-sort"></i></span></a></th>
-					<th><abbr title="moyenne">Moyenne</abbr><a id="sortm" href="#"><span class="icon"><i
-									class="fas fa-sort"></i></span></a></th>
-					<th><abbr title="selectivite">Sélectivité</abbr><a id="sorts" href="#"><span class="icon"><i
-									class="fas fa-sort"></i></span></a></th>
+					<th><abbr title="moyenne">Moyenne</abbr>
+						<a id="sortm" href="#"><span class="icon"><i class="fas fa-sort"></i></span></a>
+					</th>
+					<th> <abbr title="selectivite">Sélectivité</abbr>
+						<a id="sorts" href="#">
+							<span class="icon">
+								<i class="fas fa-sort"></i>
+							</span>
+
+						</a>
+
+					</th>
 				</tr>
 			</thead>
 			<tbody></tbody>
 		</table>
 	</div>
 	<script>
+
 		async function listeEtablissements() {
 			//exemple de nom de formation pour tester
 			let nomFormation = "BUT+-+Informatique"
@@ -68,13 +78,13 @@
 				const mentionex = item.fields.acc_tbf
 
 				//debugging
-				console.log("mentionpas= "+mentionpas)
-				console.log("mentionnull= "+mentionnull)
-				console.log("mentionabien= "+mentionabien)
-				console.log("mentionbien= "+mentionbien)
-				console.log("mentiontbien= "+mentiontbien)
-				console.log("mentionex= "+mentionex)
-				
+				console.log("mentionpas= " + mentionpas)
+				console.log("mentionnull= " + mentionnull)
+				console.log("mentionabien= " + mentionabien)
+				console.log("mentionbien= " + mentionbien)
+				console.log("mentiontbien= " + mentiontbien)
+				console.log("mentionex= " + mentionex)
+
 
 				/**On admet que :
 				 * mentin inconnue = 10
@@ -87,28 +97,35 @@
 				 * notes pour obtenir la moyenne des étudiants
 				 * acceptés dans chaque école
 				 **/
-				const moymention = (mentionpas*10+mentionnull*10+mentionabien*13+mentionbien*15+
-				mentiontbien*17+mentionex*19)/(mentionpas+mentionnull+mentionabien+mentionbien+mentiontbien+mentionex);
+				const moymention = (mentionpas * 10 + mentionnull * 10 + mentionabien * 13 + mentionbien * 15 +
+					mentiontbien * 17 + mentionex * 19) / (mentionpas + mentionnull + mentionabien + mentionbien + mentiontbien + mentionex)
 				//debugging
-				console.log(moymention);
-				
-				const moyenne = document.createElement("td");
+				console.log(moymention)
+
+				const moyenne = document.createElement("td")
 				//on rajoute toFixed(1) pour n'avoir qu'un seul chiffre après la virgule
-				const moyenneval = document.createTextNode(moymention.toFixed(1));
-				moyenne.appendChild(moyenneval);
-				tableRow.appendChild(moyenne);
+				const moyenneval = document.createTextNode(moymention.toFixed(1))
+				moyenne.appendChild(moyenneval)
+				tableRow.appendChild(moyenne)
 
 				//Colonne 5: selectivite
-				const selectivite = document.createElement("td");
-				const selectiviteval = document.createTextNode(item.fields.taux_acces_ens+"/100");//taux d'acces
-				selectivite.appendChild(selectiviteval);
-				tableRow.appendChild(selectivite);
+
+				const selectivite = document.createElement("td")
+				const selectiviteval = document.createTextNode(item.fields.taux_acces_ens)//taux d'acces
+				const progress = document.createElement("progress")
+				const progressval = document.createElement("span") // span pour la valeur en pourcentage
+				progress.classList.add("progress", "is-normal")
+				progress.setAttribute("value", item.fields.taux_acces_ens)
+				progress.setAttribute("max", "100")
+				progressval.innerHTML = `(${item.fields.taux_acces_ens}%)` // valeur en pourcentage dans le span
+				selectivite.appendChild(progressval) // ajouter le span dans la barre de progression
+				selectivite.appendChild(progress)
+				tableRow.appendChild(selectivite)
 
 				tableBody.appendChild(tableRow)
 
 			}
 		}
-
 
 		export default {
 			onMounted() {
