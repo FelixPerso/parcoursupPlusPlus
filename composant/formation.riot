@@ -1,20 +1,27 @@
 <formation>
-  <aside class="menu">
-    <thead>
-      <tr id="formation">
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </aside>
+    <div class="box m-3 scrollable">
+    <div class="columns is-mobile is-vcentered">
+    <div class="column p-1">
+    <p class="menu-label is-unselectable">Formation</p>
+    </div>
+    </div>
+    <ul class="menu-list" >
+    <li class="columns is-vcentered" each="{element in table}">
+    <a class="column is-unselectable " style="transform: translateX(0px); opacity: 1;">{element.name}
+    <span class="tag has-background-primary is-pulled-right has-text-white">{element.count}
+    <span>
+    </span>
+    </span>
+    </a>
+    </li>
 
   <script>
     export default {
-      onMounted() {
+      table: [],
+      async onMounted() {
         let requete = getRequete(0,null);
-        let resultats = transform(requete);
-        createTable(0, resultats);
+        this.table =await createTable(0,requete);
+        console.log(this.table)
       },
     };
 
@@ -23,7 +30,7 @@
     function getRequete(avancerRecherche,nameformation) {
       let nameformationdétaillé      
       let requete =
-"https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&timezone=Europe%2FBerlin"     
+"https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin"
  switch (avancerRecherche) {
         case 1:
           requete += "&refine.fili="+nameformation;
@@ -32,61 +39,32 @@
           requete += "&refine.form_lib_voe_acc="+nameformation;
           break;
         default:
-          requete = requete;  
+          requete = requete; 
           break;
       }
       return requete;
     }
 
-      async function transform(requete){
-        console.log(requete)
-      let resulatrequete = await fetch(requete);
-      let resultats = await resulatrequete.json();
-      console.log(resultats)
-      return resultats;
-    }
 
-    async function createTable(avancerRecherche, resultats) {
+ async function createTable(avancerRecherche,requete) {
+      let resulatrequete = await fetch(requete).then();
+      let retourrequetes = await resulatrequete.json();
+      console.log(retourrequetes)
       let table = [];
       switch (avancerRecherche) {
-        case 0:        
-          table = resultats["facet_groups"][0]["facets"];
+        case 0:      
+          table = retourrequetes["facet_groups"][0]["facets"];
           break;
         case 1:
-          table = resultats["facet_groups"][11]["facets"];
+          table = retourrequetes["facet_groups"][11]["facets"];
           break;
         case 2:
         //add apparition des autres éléments
-          table = resultats["facet_groups"][8]["facets"];
+          table = retourrequetes["facet_groups"][8]["facets"];
           break;
       }
-      const tableBody = document.querySelector("tbody");
-      for (const tes of table) {
-        const tableRow = document.createElement("tr");
-
-        const formationCell = document.createElement("td");
-        formationCell.textContent = tes.name;
-        tableRow.appendChild(formationCell);
-
-        const nombreDePlaceCell = document.createElement("td");
-        nombreDePlaceCell.textContent = tes.count;
-        tableRow.appendChild(nombreDePlaceCell);
-
-        tableBody.appendChild(tableRow);
-
-        // Ajout de l'événement de clic sur la ligne
-        tableRow.addEventListener("click", () => {
-          avancerRecherche ++
-          let nameformation = tes.name
-          deletetable()
-          requete = getRequete(avancerRecherche,nameformation);
-          createTable(avancerRecherche,requete);
-        })
-      }
+      return table     
     }
 
-    function deletetable(){
-      tableBody.removeChild(tableRow)
-    }
   </script>
 </formation>
