@@ -21,6 +21,7 @@
 
 						</a>
 
+
 					</th>
 				</tr>
 			</thead>
@@ -113,11 +114,19 @@
 				const selectivite = document.createElement("td")
 				const selectiviteval = document.createTextNode(item.fields.taux_acces_ens)//taux d'acces
 				const progress = document.createElement("progress")
-				const progressval = document.createElement("span") // span pour la valeur en pourcentage
+				const progressval = document.createTextNode(`(${item.fields.taux_acces_ens}%)`) // span pour la valeur en pourcentage
 				progress.classList.add("progress", "is-normal")
-				progress.setAttribute("value", item.fields.taux_acces_ens)
+				progress.setAttribute("value", 100 - item.fields.taux_acces_ens)
 				progress.setAttribute("max", "100")
-				progressval.innerHTML = `(${item.fields.taux_acces_ens}%)` // valeur en pourcentage dans le span
+
+				// Modifie la couleur de la barre en fonction de la valeur
+				if (item.fields.taux_acces_ens < 20) {
+					progress.classList.add("is-danger");
+				} else if (item.fields.taux_acces_ens < 50) {
+					progress.classList.add("is-warning");
+				} else {
+					progress.classList.add("is-info");
+				}
 				selectivite.appendChild(progressval) // ajouter le span dans la barre de progression
 				selectivite.appendChild(progress)
 				tableRow.appendChild(selectivite)
@@ -125,6 +134,9 @@
 				tableBody.appendChild(tableRow)
 
 			}
+			
+
+
 		}
 
 		export default {

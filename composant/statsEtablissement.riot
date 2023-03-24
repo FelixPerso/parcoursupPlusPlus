@@ -1,0 +1,57 @@
+<statsEtablissement>
+    <script>
+        async function statsEtablissement() {
+                const rows = document.querySelectorAll('#tableeta tbody tr');
+
+                // Loop through the rows and add click event listeners
+                rows.forEach(row => {
+                    row.addEventListener('click', () => {
+                        // Get the data from the cells in the row
+                        const nom = row.cells[0].textContent;
+                        const ville = row.cells[1].textContent;
+                        const dpt = row.cells[2].textContent;
+                        const moyenne = row.cells[3].textContent;
+                        const selectivite = row.cells[4].textContent;
+
+                        // Create the modal card content
+                        const modalContent = `
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">${nom}</p>
+                                <button class="delete" aria-label="close"></button>
+                            </header>
+                            <section class="modal-card-body">
+                                <p><strong>Ville:</strong> ${ville}</p>
+                                <p><strong>Dpt:</strong> ${dpt}</p>
+                                <p><strong>Moyenne:</strong> ${moyenne}</p>
+                                <p><strong>Sélectivité:</strong> ${selectivite}</p>
+                            </section>
+                        </div>
+                        </div>
+                        <div class="modal is-active">`;
+
+                        // Create the modal element and add the content
+                        const modal = document.createElement('div');
+                        modal.innerHTML = modalContent;
+
+                        // Append the modal to the page
+                        document.body.appendChild(modal);
+
+                        // Add event listener to close modal when clicking outside of it
+                        modal.addEventListener('click', (event) => {
+                            if (event.target.classList.contains('modal-background') ||
+                                event.target.classList.contains('delete')) {
+                                modal.remove();
+                            }
+                        });
+                    });
+                });
+            }
+        export default {
+            onMounted() {
+                statsEtablissement()
+            }
+        }
+    </script>
+</statsEtablissement>
