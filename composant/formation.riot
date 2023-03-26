@@ -1,70 +1,50 @@
 <formation>
-    <div class="box m-3 scrollable">
-    <div class="columns is-mobile is-vcentered">
-    <div class="column p-1">
-    <p class="menu-label is-unselectable">Formation</p>
-    </div>
-    </div>
-    <ul class="menu-list" >
-    <li class="columns is-vcentered" each="{element in table}">
-    <a class="column is-unselectable " style="transform: translateX(0px); opacity: 1;">{element.name}
-    <span class="tag has-background-primary is-pulled-right has-text-white">{element.count}
-    <span>
-    </span>
-    </span>
-    </a>
-    </li>
+    <label>
+        <input oninput={searchF} type="input" placeholder= {state.formation}>
+        <div id="list-formations">
+            <ul>
+                <li each={item in this.state.items}>
+                   <a href={item.path} target="_blank">{item.name}</a>
+                   <span>{item.count}</span>
+                </li>
+            </ul>
+        </div>
+    </label>
+    <script>
 
-  <script>
-    export default {
-      table: [],
-      async onMounted() {
-        let requete = getRequete(0,null);
-        this.table =await createTable(0,requete);
-        console.log(this.table)
-      },
-    };
+        async function formation(){
+            let result = await fetch("https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin")
+            let resultats = await result.json()
+            let table = resultats["facet_groups"][0]["facets"]
+            return table
+        }
 
+        export default function search(){
+            return {
+                onBeforeMount(props, state) {
+                // initial state
+                    this.state = {
+                        formation: props.formation,
+                        items: null
+                    }
+                    formation().then((response) => {
+                        this.update({
+                            items: response
+                        })
+                    })
+                    console.log(this.state.items)
+                },
+                searchF(){
+                    formation().then((response) => {
+                        this.update({
+                            items: response
+                        })
+                    })
+                    console.log(this.state.items)
+                }
+            }
+        }
 
-
-    function getRequete(avancerRecherche,nameformation) {
-      let nameformationdétaillé      
-      let requete =
-"https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin"
- switch (avancerRecherche) {
-        case 1:
-          requete += "&refine.fili="+nameformation;
-          break;
-        case 2:
-          requete += "&refine.form_lib_voe_acc="+nameformation;
-          break;
-        default:
-          requete = requete; 
-          break;
-      }
-      return requete;
-    }
-
-
- async function createTable(avancerRecherche,requete) {
-      let resulatrequete = await fetch(requete).then();
-      let retourrequetes = await resulatrequete.json();
-      console.log(retourrequetes)
-      let table = [];
-      switch (avancerRecherche) {
-        case 0:      
-          table = retourrequetes["facet_groups"][0]["facets"];
-          break;
-        case 1:
-          table = retourrequetes["facet_groups"][11]["facets"];
-          break;
-        case 2:
-        //add apparition des autres éléments
-          table = retourrequetes["facet_groups"][8]["facets"];
-          break;
-      }
-      return table     
-    }
-
-  </script>
+        
+    </script>
 </formation>
