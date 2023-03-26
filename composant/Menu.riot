@@ -1,0 +1,87 @@
+<Menu>
+<div class="field" if="{ stage === 'formation' }">
+    <label class="label">Formation</label>
+    <div class="control">
+      <div class="select">
+        <select onchange="{ updateFormation }">
+          <option value="">Sélectionnez une formation</option>
+          <option each="{ formation in formations }" value="{ formation.id }">{ formation.name }{formation.count}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" if="{ stage === 'filiere' }">
+    <label class="label">Filière</label>
+    <div class="control">
+      <div class="select">
+        <select onchange="{ updateFiliere }">
+          <option value="">Sélectionnez une filière</option>
+          <option each="{ filiere in filieres }" value="{ filiere.id }">{ filiere.name }{formation.count}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field" if="{ stage === 'filiere-detaillee' }">
+    <label class="label">Filière détaillée</label>
+    <div class="control">
+      <div class="select">
+        <select onchange="{ updateFiliereDetaillee }">
+          <option value="">Sélectionnez une filière détaillée</option>
+          <option each="{ detail in filiereDetaillee }" value="{ detail.id }">{ detail.name }{formation.count}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    export default {
+      data() {
+        return {
+          stage: 'formation',
+          formations: [],
+          filieres: [],
+          filiereDetaillee: []
+        }
+      },
+
+      async onMounted() {
+        let requete = "https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin"
+        this.formations = await fetchFormations(requete)
+      },
+
+      async fetchFormations(requete){
+        let table = await fetch(requete)
+        let result = await table.json()
+        return result
+      }
+
+      async updateFormation(e) {
+        const formationId = e.target.value
+        this.$dispatch('formation-selected', formationId)
+        if (formationId) {
+          this.filieres = await fetchFilieres(formationId)
+          this.stage = 'filiere'
+        } else {
+          this.filieres = []
+        }
+      },
+
+      async updateFiliere(e) {
+        const filiereId = e.target.value
+        this.$dispatch('filiere-selected', filiereId)
+        if (filiereId) {
+          this.filiereDetaillee = await fetchFiliereDetaillee(filiereId)
+          this.stage = 'filiere-detaillee'
+        } else {
+          this.filiereDetaillee = []
+        }
+      },
+
+      updateFiliereDetaillee(e) {
+        this.$dispatch('filiere-detaillee-selected', e.target.value)
+      }
+    }
+  </script>
+</Menu>
