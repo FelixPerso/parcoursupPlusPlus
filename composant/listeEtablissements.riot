@@ -34,8 +34,6 @@
 		</table>
 	</div>
 	<script>
-	import {observable} from 'riot'
-		
 
 		export default {
 			setup(){
@@ -49,7 +47,6 @@
 			},
 
 			async listeEtablissements() {
-			let nomFormation = "BUT+-+Informatique"
 			let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`)
 			let data = await result.json()
 			
