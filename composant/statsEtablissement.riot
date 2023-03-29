@@ -16,7 +16,7 @@
   <script>
     export default {
       props: {
-        etablissementId: String,
+        etablissement: Object,
       },
       data() {
         return {
@@ -26,21 +26,28 @@
           // Ajoutez ici les autres statistiques
         };
       },
-      async onMounted() {
+async onMounted() {
+    if (this.props.etablissement) {
         await this.fetchStatistiques();
-      },
-      async onUpdated() {
+    }
+},
+async onUpdated() {
+    if (this.props.etablissement && this.prevProps.etablissement !== this.props.etablissement) {
         await this.fetchStatistiques();
-      },
+    }
+},
       async fetchStatistiques() {
-        if (this.etablissementId) {
-          const statistiques = await fetchStatistiquesEtablissement(this.etablissementId);
-          this.moyenneAdmis = statistiques.moyenneAdmis;
-          this.capacite = statistiques.capacite;
-          this.selectivite = statistiques.selectivite;
-          // Mettez à jour les autres statistiques ici
-        }
-      },
+    if (this.props.etablissement) {
+        const etablissementId = this.props.etablissement.fields.g_ea_id_vx; // Remplacez par le bon champ si ce n'est pas le bon identifiant
+        const statistiques = await fetchStatistiquesEtablissement(etablissementId);
+        this.moyenneAdmis = statistiques.moyenneAdmis;
+        this.capacite = statistiques.capacite;
+        this.selectivite = statistiques.selectivite;
+        // Mettez à jour les autres statistiques ici
+    }
+},
+
+      
     };
   </script>
 </statsEtablissement>

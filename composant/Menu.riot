@@ -57,6 +57,20 @@
         return result
       }
 
+      async fetchFilieres(){
+        let requetefiliere = requete+"&refine.fili="+
+        let tablefilieres = await fetch(requetefiliere)
+        let resultfiliere = await tablefilieres.json()
+        return resultfiliere
+      }
+
+      async fetchFiliereDetaillee(){
+        let requetefilièredétaillé = requetefiliere+"&refine.form_lib_voe_acc="+
+        let tablefilièresdétaillé = await fetch(requetefilièredétaillé)
+        let resultfilièresdétaillé = await fetch(tablefilièresdétaillé)
+        return resultfilièresdétaillé
+      }
+
       async updateFormation(e) {
         const formationId = e.target.value
         this.$dispatch('formation-selected', formationId)

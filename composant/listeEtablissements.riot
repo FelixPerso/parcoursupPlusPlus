@@ -1,5 +1,4 @@
 <listeEtablissements>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
 	<div id="container">
 		<table id="tableeta" class="table is-striped">
 			<thead>
@@ -23,7 +22,7 @@
 				</tr>
 			</thead>
 			<tbody >
-			<tr each="{item in table}">
+			<tr each="{item in this.state.table} on">
 			<td>{item.fields.g_ea_lib_vx}</td>
 			<td>{item.fields.ville_etab}</td>
 			<td>{item.fields.dep}</td>
@@ -33,31 +32,57 @@
 			</tbody>
 		</table>
 	</div>
+	<stats-etablissement etablissement-id="{this.state.selectedEtablissement?.id}"></stats-etablissement>
 	<script>
-	
+	import StatsEtablissement from './statsEtablissement.riot'
 
-		export default {
-			setup(){
-				return {
-					table: []
-				}
-				},
-			
-			async onMounted() {
-			this.table = await this.listeEtablissements()
-			},
-
-			async listeEtablissements() {
+			async function listeEtablissements() {
 			let nomFormation = "BUT+-+Informatique"
 			let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`)
 			let data = await result.json()
 			
 			let stats = data["records"]
 			return stats
-			
+			}
+
+		export default function affichage(){
+			return {
+        components: {
+            'stats-etablissement': StatsEtablissement,
+        },
+				onBeforeMount(props, state) {
+                // initial state
+                    this.state = {
+                        listeEtablissements: props.listeEtablissements,
+                        table: null
+						selectedEtablissement: null
+                    }
+                    listeEtablissements().then((response) => {
+                        this.update({
+                            table: response
+                        })
+                    })
+                    console.log(this.state.table)
+                },
+				showDetails(item) {
+    this.update({
+        selectedEtablissement: item
+
+    });
+},
+                searchF(){
+                    listeEtablissements().then((response) => {
+                        this.update({
+                            table: response
+                        })
+                    })
+                    console.log(this.state.table)
+                }
+
 
 			}
 		}
+
 
 
 	</script>

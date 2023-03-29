@@ -1,26 +1,48 @@
 <!DOCTYPE html>
-<html lang="fr">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parcours Sup</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
-    integrity="sha384-eNCOe7tC1doHpGoJtKh7z7lGz7fuP4F8Y317VM8W8/veyr59AiUOzr+b7n1s6j+p" crossorigin="anonymous">
-  <link rel="stylesheet" href="./css/default.css">
-</head>
-
-<body>
-  <app></app>
-  <script src="https://unpkg.com/riot@5.0.0-6"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script type="module">
-    import App from './components/App.riot';
-    // Enregistrement du composant App
-    riot.register('app', App);
-    // Montage du composant App
-    riot.mount('app');
-  </script>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Intitulé de ma page</title>
+    <!-- <my-tag/> is specified in an external file -->
+    <script src="./composant/progressbar.riot" type="riot"></script>
+    <script src="./composant/searchformation.riot" type="riot"></script>
+    <script src="./composant/listeEtablissements.riot" type="riot"></script>
+    <script src="./composant/formation.riot" type="riot"></script>
+    <!-- <script src="./composant/listeEtablissements.riot" type="riot"></script> -->
+    <!-- include riot.js and the compiler -->
+    <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
+    <link rel="stylesheet" href="./css/default.css">
+  </head>
+  <body>
+    <!-- en‑tête principale  -->
+    <header>
+      <h1>En-tête</h1>
+    </header>
+    <!-- contenu de la page -->
+    <main>
+      
+      <div class="column is-4 m-5">
+      <searchformation>
+      </searchformation>
+      <formation></formation>
+      <listeEtablissements></listeEtablissements>
+      </div>
+      <!-- <listeEtablissements></listeEtablissements> -->
+  
+    <!-- compile and mount -->
+    
+    
+    <script>
+      (async function main() {
+        await riot.compile();
+        riot.mount('formation');
+        riot.mount('listeEtablissements')
+      }());
+    </script>
+    
+    </main>
+    <!-- pied de page  -->
+    <footer>
+      <p>©Copyright Félix Brinet Baptiste Nevejans / Tous droits reversés.</p>
+    </footer>
 </body>
-
-</html>

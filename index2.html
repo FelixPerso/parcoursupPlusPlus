@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcours Sup</title>
+  <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
+    integrity="sha384-eNCOe7tC1doHpGoJtKh7z7lGz7fuP4F8Y317VM8W8/veyr59AiUOzr+b7n1s6j+p" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/default.css">
+</head>
+
+<body>
+  <app></app>
+  <script type="module">
+    import App from './components/App.riot';
+    // Enregistrement du composant App
+    riot.register('app', App);
+    // Montage du composant App
+    riot.mount('app');
+  </script>
+</body>
+
+</html>

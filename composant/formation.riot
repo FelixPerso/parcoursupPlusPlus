@@ -4,21 +4,19 @@
         <div id="list-formations">
             <ul>
                 <li each={item in this.state.items}>
-                   <a href={item.path} target="_blank">{item.name}</a>
+                   <a>{item.name}</a>
                    <span>{item.count}</span>
                 </li>
             </ul>
         </div>
     </label>
     <script>
-
         async function formation(){
             let result = await fetch("https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin")
             let resultats = await result.json()
             let table = resultats["facet_groups"][0]["facets"]
             return table
         }
-
         export default function search(){
             return {
                 onBeforeMount(props, state) {
@@ -44,7 +42,6 @@
                 }
             }
         }
-
         
     </script>
 </formation>
