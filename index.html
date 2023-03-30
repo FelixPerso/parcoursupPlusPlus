@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Intitulé de ma page</title>
+    <link rel="stylesheet" type="stylesheet" href="https://cdn.jsdelivr.net/npm/Bulma@0.9.1/css/Bulma.min.css">
     <!-- <my-tag/> is specified in an external file -->
-    <script src="./composant/progressbar.riot" type="riot"></script>
-    <script src="./composant/searchformation.riot" type="riot"></script>
-    <script src="./composant/listeEtablissements.riot" type="riot"></script>
+    <script src="./composant/composant.riot" type="riot"></script>
     <script src="./composant/formation.riot" type="riot"></script>
     <!-- <script src="./composant/listeEtablissements.riot" type="riot"></script> -->
     <!-- include riot.js and the compiler -->
@@ -20,13 +19,8 @@
     </header>
     <!-- contenu de la page -->
     <main>
-      
-      <div class="column is-4 m-5">
-      <searchformation>
-      </searchformation>
-      <formation></formation>
-      <listeEtablissements></listeEtablissements>
-      </div>
+      <composant>
+      </composant>
       <!-- <listeEtablissements></listeEtablissements> -->
   
     <!-- compile and mount -->
@@ -35,8 +29,7 @@
     <script>
       (async function main() {
         await riot.compile();
-        riot.mount('formation');
-        riot.mount('listeEtablissements')
+        riot.mount('composant');
       }());
     </script>
     

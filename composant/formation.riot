@@ -3,7 +3,7 @@
         <input oninput={searchF} type="input" placeholder= {state.formation}>
         <div id="list-formations">
             <ul>
-                <li each={item in this.state.items}>
+                <li onClick={selectFormation} each={item in this.state.items}>
                    <a>{item.name}</a>
                    <span>{item.count}</span>
                 </li>
@@ -11,14 +11,14 @@
         </div>
     </label>
     <script>
-        async function formation(){
+            async function formation(){
             let result = await fetch("https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin")
             let resultats = await result.json()
             let table = resultats["facet_groups"][0]["facets"]
             return table
         }
-        export default function search(){
-            return {
+
+        export default {
                 onBeforeMount(props, state) {
                 // initial state
                     this.state = {
@@ -39,8 +39,13 @@
                         })
                     })
                     console.log(this.state.items)
-                }
-            }
+                },
+                selectFormation(event) {
+                    const selectedFormation = event.target.textContent;
+                        this.update({
+                        formation: selectedFormation
+                    });
+                },
         }
         
     </script>
