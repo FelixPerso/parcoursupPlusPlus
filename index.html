@@ -5,7 +5,12 @@
     <title>Intitulé de ma page</title>
     <link rel="stylesheet" type="stylesheet" href="https://cdn.jsdelivr.net/npm/Bulma@0.9.1/css/Bulma.min.css">
     <!-- <my-tag/> is specified in an external file -->
+<<<<<<< HEAD
     <script src="./composant/composant.riot" type="riot"></script>
+=======
+    <script src="./composant/progressbar.riot" type="riot"></script>
+    <script src="./composant/searchformation.riot" type="riot"></script>
+>>>>>>> nevejans
     <script src="./composant/formation.riot" type="riot"></script>
     <!-- <script src="./composant/listeEtablissements.riot" type="riot"></script> -->
     <!-- include riot.js and the compiler -->
@@ -19,20 +24,44 @@
     </header>
     <!-- contenu de la page -->
     <main>
+<<<<<<< HEAD
       <composant>
       </composant>
       <!-- <listeEtablissements></listeEtablissements> -->
   
     <!-- compile and mount -->
+=======
+      
+      <div class="column is-4 m-5">
+      <searchformation>
+      </searchformation>
+      <formation></formation>
+      </div>
+      <!-- <listeEtablissements></listeEtablissements> -->
+  
+    <!-- compile and mount -->
+
+
+>>>>>>> nevejans
     
     
     <script>
       (async function main() {
         await riot.compile();
+<<<<<<< HEAD
         riot.mount('composant');
       }());
     </script>
     
+=======
+        riot.mount('formation');
+      }());
+    </script>
+    
+
+
+
+>>>>>>> nevejans
     </main>
     <!-- pied de page  -->
     <footer>
