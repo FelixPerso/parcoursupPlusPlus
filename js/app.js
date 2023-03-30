@@ -1,5 +1,5 @@
 /*
-    
+    Manifest, permet de référencer les .js des composants riot
 */
 
 import Formation from './formation.js/.js'
