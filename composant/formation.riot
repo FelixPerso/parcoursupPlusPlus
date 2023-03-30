@@ -3,37 +3,22 @@
         <input oninput={searchF} type="input" placeholder= {state.formation}>
         <div id="list-formations">
             <ul>
-<<<<<<< HEAD
                 <li onClick={selectFormation} each={item in this.state.items}>
                    <a>{item.name}</a>
-=======
-                <li each={item in this.state.items}>
-                   <a href={item.path} target="_blank">{item.name}</a>
->>>>>>> nevejans
                    <span>{item.count}</span>
                 </li>
             </ul>
         </div>
     </label>
     <script>
-<<<<<<< HEAD
             async function formation(){
-=======
-
-        async function formation(){
->>>>>>> nevejans
             let result = await fetch("https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili&timezone=Europe%2FBerlin")
             let resultats = await result.json()
             let table = resultats["facet_groups"][0]["facets"]
             return table
         }
 
-<<<<<<< HEAD
         export default {
-=======
-        export default function search(){
-            return {
->>>>>>> nevejans
                 onBeforeMount(props, state) {
                 // initial state
                     this.state = {
@@ -54,7 +39,6 @@
                         })
                     })
                     console.log(this.state.items)
-<<<<<<< HEAD
                 },
                 selectFormation(event) {
                     const selectedFormation = event.target.textContent;
@@ -63,12 +47,6 @@
                     });
                 },
         }
-=======
-                }
-            }
-        }
-
->>>>>>> nevejans
         
     </script>
 </formation>
