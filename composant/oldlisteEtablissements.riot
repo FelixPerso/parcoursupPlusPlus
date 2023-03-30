@@ -1,0 +1,93 @@
+<oldlisteEtablissements>
+async function listeEtablissements() {
+     <script>
+			//exemple de nom de formation pour tester
+			let nomFormation = "BUT+-+Informatique"
+			let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`)
+			let data = await result.json()
+			// Récupération des données de noms, villes, département, moyenne des admis, et selectivité de la formation sélectionnée
+			let table = data["records"]
+			// Debugging 
+			// console.log(table)
+			// console.log(result)
+			// console.log(data)
+			const tableBody = document.querySelector("tbody")
+
+			// Boucle sur les éléments de 
+			for (item of table) {
+
+				console.log("boucle execute")
+				// Création d'une ligne de table
+				const tableRow = document.createElement("tr")
+
+				// Colonne 1: Nom
+				const nom = document.createElement("td")
+				const nomval = document.createTextNode(item.fields.g_ea_lib_vx)
+				nom.appendChild(nomval)
+				tableRow.appendChild(nom)
+
+				// Colonne 2: Ville
+				const ville = document.createElement("td")
+				console.log(item.fields.ville_etab)
+				const villeval = document.createTextNode(item.fields.ville_etab)
+				ville.appendChild(villeval)
+				tableRow.appendChild(ville)
+
+				// Colonne 3: dpt
+				const dpt = document.createElement("td")
+				const dptval = document.createTextNode(item.fields.dep)
+				dpt.appendChild(dptval)
+				tableRow.appendChild(dpt)
+
+				// Colonne 4: moyenne
+				//Ici on calcul la moyenne des admis grace aux mentions
+				const mentionpas = item.fields.acc_mention_nonrenseignee
+				const mentionnull = item.fields.acc_sansmention
+				const mentionabien = item.fields.acc_ab
+				const mentionbien = item.fields.acc_ab
+				const mentiontbien = item.fields.acc_tb
+				const mentionex = item.fields.acc_tbf
+
+				//debugging
+				console.log("mentionpas= "+mentionpas)
+				console.log("mentionnull= "+mentionnull)
+				console.log("mentionabien= "+mentionabien)
+				console.log("mentionbien= "+mentionbien)
+				console.log("mentiontbien= "+mentiontbien)
+				console.log("mentionex= "+mentionex)
+				
+
+				/**On admet que :
+				 * mentin inconnue = 10
+				 * sans mention = 10
+				 * mention assez bien = 13
+				 * mention bien = 15
+				 * mention tres bien = 17
+				 * mention excellence = 18
+				 * On calcul ensuite la moyenne de toutes ces
+				 * notes pour obtenir la moyenne des étudiants
+				 * acceptés dans chaque école
+				 **/
+				const moymention = (mentionpas*10+mentionnull*10+mentionabien*13+mentionbien*15+
+				mentiontbien*17+mentionex*19)/(mentionpas+mentionnull+mentionabien+mentionbien+mentiontbien+mentionex);
+				//debugging
+				console.log(moymention);
+				
+				const moyenne = document.createElement("td");
+				//on rajoute toFixed(1) pour n'avoir qu'un seul chiffre après la virgule
+				const moyenneval = document.createTextNode(moymention.toFixed(1));
+				moyenne.appendChild(moyenneval);
+				tableRow.appendChild(moyenne);
+
+				//Colonne 5: selectivite
+				const selectivite = document.createElement("td");
+				const selectiviteval = document.createTextNode(item.fields.taux_acces_ens+"/100");//taux d'acces
+				selectivite.appendChild(selectiviteval);
+				tableRow.appendChild(selectivite);
+
+				tableBody.appendChild(tableRow)
+
+			}
+		}  
+        </script>
+<oldlisteEtablissements>

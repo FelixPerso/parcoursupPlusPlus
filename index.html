@@ -1,54 +1,36 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Intitulé de ma page</title>
-    <!-- <my-tag/> is specified in an external file -->
-    <script src="./composant/progressbar.riot" type="riot"></script>
-    <script src="./composant/searchformation.riot" type="riot"></script>
-    <script src="./composant/formation.riot" type="riot"></script>
-    <!-- <script src="./composant/listeEtablissements.riot" type="riot"></script> -->
-    <!-- include riot.js and the compiler -->
-    <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
-    <link rel="stylesheet" href="./css/default.css">
-  </head>
+<html lang="fr">
 
-  <body>
-    <!-- en‑tête principale  -->
-    <header>
-      <h1>En-tête</h1>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcours Sup</title>
+  <script src="./composant/progressbar.riot" type="riot"></script>
+  <script src="./composant/searchformation.riot" type="riot"></script>
+  <script src="./composant/formation.riot" type="riot"></script>
+  <script src="./composant/statsEtablissement.riot" type="riot"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="./css/default.css">
+</head>
 
-    <!-- contenu de la page -->
-    <main>
-      
-      <div class="column is-4 m-5">
-      <searchformation>
-      </searchformation>
-      <formation></formation>
-      </div>
-      <!-- <listeEtablissements></listeEtablissements> -->
-  
-    <!-- compile and mount -->
+<!-- contenu de la page -->
+<main>
 
+  <div class="column is-4 m-5">
+    <searchformation></searchformation>
+    <formation></formation>
+  </div>
+  <!-- <listeEtablissements></listeEtablissements> -->
 
-    
-    
-    <script>
-      (async function main() {
-        await riot.compile();
-        riot.mount('formation');
-      }());
-    </script>
-    
+  <!-- compile and mount -->
+  <script>
+    (async function main() {
+      await riot.compile();
+      riot.mount('formation');
+    }());
+  </script>
 
 
 
-    </main>
 
-    <!-- pied de page  -->
-    <footer>
-      <p>©Copyright Félix Brinet Baptiste Nevejans / Tous droits reversés.</p>
-    </footer>
-
-</body>
+</html>
