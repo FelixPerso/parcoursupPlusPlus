@@ -7,7 +7,7 @@
         <div id="list-formations">
             <ul>
                 <li class="m-1"  each={item in this.state.items}>
-                   <button  onClick={selectFormation} data-formation="{item.name}" class="button is-fullwidth p-2" >
+                   <button  onclick={selectFormation} data-formation="{item.name}" class="button is-fullwidth p-2" >
                    <span style="font-size: .75em; max-size: 90%">
                    <strong>{item.name}</strong>
                    </span>
@@ -27,8 +27,25 @@
                 clickCounter: 0,
 
                         async findformation(queryString = "") {
-                console.log(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili${queryString}`)  
-                let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili${queryString}`);
+                            let resulta
+                            let formation = "";
+                switch(this.clickCounter){
+                    case 0:
+                    resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=fili${queryString}`;
+                    break;
+
+                    case 1:
+                    resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=form_lib_voe_acc&refine.fili=${queryString}`;
+                    formation = queryString
+                    console.log(formation)
+                    break;
+
+                    case 2:
+                    resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=fil_lib_voe_acc&refine.fili=${formation}&refine.form_lib_voe_acc=${queryString}`;
+                    break;
+                }
+                console.log(resulta)  
+                let result = await fetch(resulta);
                 let resultats = await result.json();
                 console.log(resultats)
                 let table = []
@@ -37,7 +54,7 @@
                 if (this.clickCounter === 0) {
                     table = resultats["facet_groups"][0]["facets"];
                 } else if (this.clickCounter === 1){
-                    table = resultats["facet_groups"][11]["facets"];
+                    table = resultats["facet_groups"][0]["facets"];
                 } else if (this.clickCounter === 2){
                     table = resultats["facet_groups"][8]["facets"];
                 }
@@ -78,7 +95,7 @@
                     this.clickCounter++;
 
                      if (this.clickCounter === 1) {
-                 this.findformation(`&refine.fili=${selectedFormation}`).then((response) => {
+                 this.findformation(`${selectedFormation}`).then((response) => {
                      this.update({
                      items: response
                           });
@@ -86,7 +103,7 @@
                   });
 
                 } else if (this.clickCounter === 2) {
-                    this.findformation(`&refine.form_lib_voe_acc=${selectedFormation}`).then((response) => {
+                    this.findformation(encodeURI(selectedFormation)).then((response) => {
                 this.update({
                     items: response
                 });
