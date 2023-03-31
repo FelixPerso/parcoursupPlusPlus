@@ -35,44 +35,32 @@
 <script>
 		export default {
 			async listeEtablissements() {
-			let nomFormation = "BUT+-+Informatique"
-			let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`)
-			let data = await result.json()
-			
-			let stats = data["records"]
-			return stats
-			}
+			let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`);
+			let data = await result.json();			
+			let stats = data["records"];
+			return stats;
+			},
 				onBeforeMount(props, state) {
                 // initial state
                     this.state = {
                         listeEtablissements: props.listeEtablissements,
                         table: null
                     }
-                    listeEtablissements().then((response) => {
+                    this.listeEtablissements().then((response) => {
                         this.update({
                             table: response
                         })
                     })
                     console.log(this.state.table)
                 },
-				showDetails(item) {
-    this.update({
-        selectedEtablissement: item
-
-    });
-},
                 searchF(){
-                    listeEtablissements().then((response) => {
+                    this.listeEtablissements().then((response) => {
                         this.update({
                             table: response
                         })
                     })
                     console.log(this.state.table)
                 }
-
-
-
-
 			}
 
 

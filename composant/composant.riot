@@ -1,15 +1,17 @@
 <composant>
-<div class="column is-4 m-5">
+<div class="columns">
+<div class="column is-one-third">
 <formation></formation>
 </div>
-<div class ="column">
+<div class="column">
 <listeEtablissements></listeEtablissements>
+</div>
 </div>
    <script>
       (async function main() {
         await riot.compile();
         riot.mount('formation');
-        riot.mount('listeEatblissements');
+        riot.mount('listeEtablissements');
       }());
     </script>
 
