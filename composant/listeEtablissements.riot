@@ -22,7 +22,7 @@
 				</tr>
 			</thead>
 			<tbody >
-			<tr each="{item in this.state.table} on">
+			<tr each="{item in props.table} on">
 			<td>{item.fields.g_ea_lib_vx}</td>
 			<td>{item.fields.ville_etab}</td>
 			<td>{item.fields.dep}</td>
@@ -32,38 +32,5 @@
 			</tbody>
 		</table>
 	</div>
-<script>
-		export default {
-			async listeEtablissements() {
-			let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`);
-			let data = await result.json();			
-			let stats = data["records"];
-			return stats;
-			},
-				onBeforeMount(props, state) {
-                // initial state
-                    this.state = {
-                        listeEtablissements: props.listeEtablissements,
-                        table: null
-                    }
-                    this.listeEtablissements().then((response) => {
-                        this.update({
-                            table: response
-                        })
-                    })
-                    console.log(this.state.table)
-                },
-                searchF(){
-                    this.listeEtablissements().then((response) => {
-                        this.update({
-                            table: response
-                        })
-                    })
-                    console.log(this.state.table)
-                }
-			}
 
-
-
-	</script>
 </listeEtablissements>
