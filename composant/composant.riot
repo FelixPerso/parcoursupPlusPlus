@@ -16,7 +16,7 @@
       nameForma: null,
       resulta: null,
       nameFormaTD: null,
-      count: null,
+      count: 0,
       onBeforeMount(props, state) {
         // initial state
         this.state = {
@@ -54,7 +54,7 @@
       selectFormation(event) {
         //console.log("clique effectué")
         const selectedFormation = event.currentTarget.getAttribute('data-formation');
-        count = event.currentTarget.childNodes[2].outerText
+        this.count = event.currentTarget.childNodes[2].outerText
         this.update({
           formation: selectedFormation
 
@@ -74,14 +74,14 @@
 
         } else if (this.clickCounter === 1) {
           this.clickCounter++;
-          this.findformation(encodeURI(selectedFormation)).then((response) => {
+          this.findformation(encodeURIComponent(selectedFormation)).then((response) => {
             this.update({
               items: response
             });
             
           });
         }else if (this.clickCounter === 2) {
-          resulta = `https://data.enseignementsup-recherche.gouv.fr//api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=${count}&refine.fili=${nameForma}&refine.form_lib_voe_acc=${nameFormaTD}&refine.fil_lib_voe_acc=${encodeURI(selectedFormation)}`
+          resulta = `https://data.enseignementsup-recherche.gouv.fr//api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=${this.count}&refine.fili=${nameForma}&refine.form_lib_voe_acc=${nameFormaTD}&refine.fil_lib_voe_acc=${encodeURIComponent(selectedFormation)}`
           console.log(resulta)
           this.listeEtablissements().then((response) => {
             this.update({
@@ -130,8 +130,25 @@
       let result = await fetch(resulta)
 			let data = await result.json();			
 			let stats = data["records"];
+      stats = this.newStat(stats);
 			return stats;
-			}
+			},
+
+    newStat(stats){
+    for(statbacandselec of stats){
+				let mentionnull = statbacandselec.fields.acc_sansmention
+				let mentionabien = statbacandselec.fields.acc_ab
+				let mentionbien = statbacandselec.fields.acc_ab
+				let mentiontbien = statbacandselec.fields.acc_tb
+				let mentionex = statbacandselec.fields.acc_tbf
+        let moymention = (mentionnull*10+mentionabien*13+mentionbien*15+
+				mentiontbien*17+mentionex*19)/(mentionnull+mentionabien+mentionbien+mentiontbien+mentionex);
+        let selectivite =  statbacandselec.fields.taux_acces_ens  
+        statbacandselec.moyenne = moymention.toFixed(1)
+        statbacandselec.selectivites= selectivite
+      }
+      return stats;
+    }
     }
 
 
