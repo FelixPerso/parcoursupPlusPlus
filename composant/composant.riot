@@ -10,15 +10,13 @@
   </div>
   <script>
 
-    (async function main() {
-      await riot.compile()
-      riot.mount('formation')
-      riot.mount('listeEtablissements')
-    }())
+
     export default {
       clickCounter: 0,
       nameForma: null,
       resulta: null,
+      nameFormaTD: null,
+      count: null,
       onBeforeMount(props, state) {
         // initial state
         this.state = {
@@ -27,17 +25,12 @@
           listeEtablissements: null,
           table: null
         }
-        this.listeEtablissements().then((response) => {
-          this.update({
-            table: response
-          })
-        })
-        console.log(this.state.table)
+        //console.log(this.state.table)
         this.findformation("").then((response) => {
           this.update({
             items: response
           })
-          console.log(this.state.items)
+          //console.log(this.state.items)
         })
       },
 
@@ -47,7 +40,7 @@
             items: response
           })
         })
-        console.log(this.state.items)
+        //console.log(this.state.items)
       },
       searchE() {
         this.listeEtablissements().then((response) => {
@@ -55,33 +48,47 @@
             table: response
           })
         })
-        console.log(this.state.table)
+        //console.log(this.state.table)
       },
 
       selectFormation(event) {
-        console.log("clique effectué")
-        const selectedFormation = event.target.getAttribute('data-formation');
+        //console.log("clique effectué")
+        const selectedFormation = event.currentTarget.getAttribute('data-formation');
+        count = event.currentTarget.childNodes[2].outerText
         this.update({
           formation: selectedFormation
 
         });
 
-        this.clickCounter++;
+        
 
-        if (this.clickCounter === 1) {
+        if (this.clickCounter === 0) {
+          this.clickCounter++;
           this.findformation(selectedFormation).then((response) => {
             this.update({
               items: response
             });
-            console.log(this.state.items)
+            
+            //console.log(this.state.items)
           });
 
-        } else if (this.clickCounter === 2) {
+        } else if (this.clickCounter === 1) {
+          this.clickCounter++;
           this.findformation(encodeURI(selectedFormation)).then((response) => {
             this.update({
               items: response
             });
+            
           });
+        }else if (this.clickCounter === 2) {
+          resulta = `https://data.enseignementsup-recherche.gouv.fr//api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=${count}&refine.fili=${nameForma}&refine.form_lib_voe_acc=${nameFormaTD}&refine.fil_lib_voe_acc=${encodeURI(selectedFormation)}`
+          console.log(resulta)
+          this.listeEtablissements().then((response) => {
+            this.update({
+              table: response
+            })
+          })
+
         }
       },
 
@@ -97,32 +104,34 @@
           case 1:
             resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=form_lib_voe_acc&refine.fili=${queryString}`;
             nameForma = queryString
-            console.log(formation)
+            ////console.log(formation)
             break;
 
           case 2:
             resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=fil_lib_voe_acc&refine.fili=${nameForma}&refine.form_lib_voe_acc=${queryString}`;
+            nameFormaTD = queryString
             break;
-          case 3:
-            resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`
+
         }
-        console.log(resulta)
+        //console.log(resulta)
         let result = await fetch(resulta);
         let resultats = await result.json();
-        console.log(resultats)
+        //console.log(resultats)
         let table = []
         console.log(this.clickCounter)
-
-        table = resultats["facet_groups"][0]["facets"];
-        console.log(table)
+        if(this.clickCounter!=3)
+          table = resultats["facet_groups"][0]["facets"];
+        //console.log(table)
         return table;
+  
+
       },
       async listeEtablissements() {
       let result = await fetch(resulta)
 			let data = await result.json();			
 			let stats = data["records"];
 			return stats;
-			},
+			}
     }
 
 
