@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Intitulé de ma page</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <!-- <my-tag/> is specified in an external file -->
-    <script src="./composant/composant.riot" type="riot"></script>
-    <script src="./composant/formation.riot" type="riot"></script>
-    <!-- <script src="./composant/listeEtablissements.riot" type="riot"></script> -->
-    <!-- include riot.js and the compiler -->
-    <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
-    <link rel="stylesheet" href="./css/default.css">
-  </head>
-  <body>
-    <!-- en‑tête principale  -->
-    <header>
-      <h1>En-tête</h1>
-    </header>
-    <!-- contenu de la page -->
-    <main>
-      <composant>
-      </composant>
-      <!-- <listeEtablissements></listeEtablissements> -->
-  
+
+<head>
+  <meta charset="utf-8">
+  <title>Parcoursup++</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <!-- <my-tag/> is specified in an external file -->
+  <script src="./composant/composant.riot" type="riot"></script>
+  <script src="./composant/formation.riot" type="riot"></script>
+  <!-- <script src="./composant/listeEtablissements.riot" type="riot"></script> -->
+  <!-- include riot.js and the compiler -->
+  <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
+  <link rel="stylesheet" href="./css/default.css">
+</head>
+<style>
+  @import url("https://fonts.googleapis.com/css?  family=Lora:400,400i,700,700i");
+</style>
+
+<body>
+  <!-- en‑tête principale  -->
+  <header>
+    <svg width="100%" height="100%">
+      <text x="50%" y="70%" text-anchor="middle">
+        Parcoursup++
+      </text>
+    </svg>
+  </header>
+  <!-- contenu de la page -->
+  <main>
+    <composant>
+    </composant>
+    <!-- <listeEtablissements></listeEtablissements> -->
+
     <!-- compile and mount -->
-    
-    
+
+
     <script>
       (async function main() {
         await riot.compile();
         riot.mount('composant');
       }());
     </script>
-    
-    </main>
-    <!-- pied de page  -->
-    <footer>
-      <p>©Copyright Félix Brinet Baptiste Nevejans / Tous droits reversés.</p>
-    </footer>
+
+  </main>
+  <!-- pied de page  -->
+  <footer>
+    <p>©Copyright Félix Brinet Baptiste Nevejans / Tous droits reversés.</p>
+  </footer>
 </body>
