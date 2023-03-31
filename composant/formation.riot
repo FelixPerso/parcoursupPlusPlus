@@ -26,22 +26,23 @@
                 clickCounter: 0,
 
                         async findformation(queryString = "") {
-  console.log(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili${queryString}`)  
-  let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili${queryString}`);
-  let resultats = await result.json();
-  console.log(resultats)
-  let table = []
-  console.log(this.clickCounter)
-   if (this.clickCounter === 0) {
-  table = resultats["facet_groups"][0]["facets"];
-   } else if (this.clickCounter === 1){
-    table = resultats["facet_groups"][11]["facets"];
-   } else if (this.clickCounter === 2){
-    table = resultats["facet_groups"][8]["facets"];
-   }
-   console.log(table)
-  return table;
-},
+                console.log(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili${queryString}`)  
+                let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&facet=fili${queryString}`);
+                let resultats = await result.json();
+                console.log(resultats)
+                let table = []
+                console.log(this.clickCounter)
+
+                if (this.clickCounter === 0) {
+                    table = resultats["facet_groups"][0]["facets"];
+                } else if (this.clickCounter === 1){
+                    table = resultats["facet_groups"][11]["facets"];
+                } else if (this.clickCounter === 2){
+                    table = resultats["facet_groups"][8]["facets"];
+                }
+                console.log(table)
+                return table;
+                },
                 onBeforeMount(props, state) {
                 // initial state
                     this.state = {
