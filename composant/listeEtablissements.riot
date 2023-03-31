@@ -21,16 +21,28 @@
 					</th>
 				</tr>
 			</thead>
-			<tbody >
-			<tr each="{item in props.table} on">
-			<td>{item.fields.g_ea_lib_vx}</td>
-			<td>{item.fields.ville_etab}</td>
-			<td>{item.fields.dep}</td>
-			<td>{item.moyenne}</td>
-			<td><progress max="100" class="progress is-warning" value="{item.selectivites}"></progress></td>
-			</tr>
+			<tbody>
+				<tr each="{item in props.table} on">
+					<td>{item.fields.g_ea_lib_vx}</td>
+					<td>{item.fields.ville_etab}</td>
+					<td>{item.fields.dep}</td>
+					<td>{item.moyenne}</td>
+				 	<td class="is-flex is-align-items-center">{100-item.selectivites}%<progress max="100" class="ml-2 progress {this.selecColor(item.selectivites)}" value="{100-item.selectivites}"></progress></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
+	<script>
+		export default {
+			selecColor(number) {
+				if (number < 20)
+					return "is-danger";
+				else if (number < 50)
+					return "is-warning";
+				else
+					return "is-info";
+			}
+		}
 
+	</script>
 </listeEtablissements>
