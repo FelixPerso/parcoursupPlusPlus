@@ -144,7 +144,13 @@
 				let mentionex = statbacandselec.fields.acc_tbf
         let moymention = (mentionnull*10+mentionabien*13+mentionbien*15+
 				mentiontbien*17+mentionex*19)/(mentionnull+mentionabien+mentionbien+mentiontbien+mentionex);
-        let selectivite =  statbacandselec.fields.taux_acces_ens  
+        let selectivite =  statbacandselec.fields.taux_acces_ens
+        if(!selectivite){
+          selectivite=0
+        }
+        if (!moymention){
+          moymention=0
+        }  
         statbacandselec.moyenne = moymention.toFixed(1)
         statbacandselec.selectivites= selectivite
       }
