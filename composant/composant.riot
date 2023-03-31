@@ -11,7 +11,6 @@
   </div>
   <script>
 
-
     export default {
       clickCounter: 0,
       nameForma: null,
@@ -26,12 +25,11 @@
           listeEtablissements: null,
           table: null
         }
-        //console.log(this.state.table)
         this.findformation("").then((response) => {
           this.update({
             items: response
           })
-          //console.log(this.state.items)
+
         })
       },
 
@@ -41,7 +39,7 @@
             items: response
           })
         })
-        //console.log(this.state.items)
+
       },
       searchE() {
         this.listeEtablissements().then((response) => {
@@ -49,11 +47,11 @@
             table: response
           })
         })
-        //console.log(this.state.table)
+
       },
 
       selectFormation(event) {
-        //console.log("clique effectué")
+    
         const selectedFormation = event.currentTarget.getAttribute('data-formation');
         this.count = event.currentTarget.childNodes[2].outerText
         this.update({
@@ -70,7 +68,7 @@
               items: response
             });
             
-            //console.log(this.state.items)
+
           });
 
         } else if (this.clickCounter === 1) {
@@ -83,7 +81,6 @@
           });
         }else if (this.clickCounter === 2) {
           resulta = `https://data.enseignementsup-recherche.gouv.fr//api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=${this.count}&refine.fili=${nameForma}&refine.form_lib_voe_acc=${nameFormaTD}&refine.fil_lib_voe_acc=${encodeURIComponent(selectedFormation)}`
-          console.log(resulta)
           this.listeEtablissements().then((response) => {
             this.update({
               table: response
@@ -105,7 +102,7 @@
           case 1:
             resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=form_lib_voe_acc&refine.fili=${queryString}`;
             nameForma = queryString
-            ////console.log(formation)
+     
             break;
 
           case 2:
@@ -114,15 +111,14 @@
             break;
 
         }
-        //console.log(resulta)
+    
         let result = await fetch(resulta);
         let resultats = await result.json();
-        //console.log(resultats)
+        
         let table = []
-        console.log(this.clickCounter)
         if(this.clickCounter!=3)
           table = resultats["facet_groups"][0]["facets"];
-        //console.log(table)
+
         return table;
   
 
