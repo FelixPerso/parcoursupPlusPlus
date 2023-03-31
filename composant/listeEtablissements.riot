@@ -1,12 +1,6 @@
 <listeEtablissements>
-<<<<<<< HEAD
 	<div id="container">
 		<table id="tableeta" class="table is-fullwidth is-hoverable">
-=======
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-	<div id="container">
-		<table id="tableeta" class="table is-striped">
->>>>>>> nevejans
 			<thead>
 				<tr>
 					<th id="pos"><abbr title="nom">Nom</abbr><a id="sortn" href="#"><span class="icon"><i
@@ -38,11 +32,9 @@
 			</tbody>
 		</table>
 	</div>
-	<stats-etablissement etablissement-id="{this.state.selectedEtablissement?.id}"></stats-etablissement>
-	<script>
-	import StatsEtablissement from './statsEtablissement.riot'
-
-			async function listeEtablissements() {
+<script>
+		export default {
+			async listeEtablissements() {
 			let nomFormation = "BUT+-+Informatique"
 			let result = await fetch(`https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&sort=tri&refine.fil_lib_voe_acc=Informatique&refine.form_lib_voe_acc=BUT+-+Production&refine.fili=BUT&timezone=Europe%2FBerlin`)
 			let data = await result.json()
@@ -50,17 +42,11 @@
 			let stats = data["records"]
 			return stats
 			}
-
-		export default {
-        components: {
-            'stats-etablissement': StatsEtablissement,
-        },
 				onBeforeMount(props, state) {
                 // initial state
                     this.state = {
                         listeEtablissements: props.listeEtablissements,
                         table: null
-						selectedEtablissement: null
                     }
                     listeEtablissements().then((response) => {
                         this.update({
@@ -83,6 +69,8 @@
                     })
                     console.log(this.state.table)
                 }
+
+
 
 
 			}
