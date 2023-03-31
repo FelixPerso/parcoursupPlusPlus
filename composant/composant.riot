@@ -5,11 +5,11 @@
       </formation>
     </div>
     <div class="column">
+      <statsEtablissements functionMoy={moymention}></statsEtablissements>
       <listeEtablissements table={state.table} searchE={searchE}></listeEtablissements>
     </div>
   </div>
   <script>
-
 
     export default {
       clickCounter: 0,
@@ -118,7 +118,7 @@
         let resultats = await result.json();
         //console.log(resultats)
         let table = []
-        console.log(this.clickCounter)
+        //console.log(this.clickCounter)
         if(this.clickCounter!=3)
           table = resultats["facet_groups"][0]["facets"];
         //console.log(table)
@@ -131,7 +131,46 @@
 			let data = await result.json();			
 			let stats = data["records"];
 			return stats;
-			}
+			},
+      async functionMoy(){
+        let result = await fetch(resulta)
+			  let data = await result.json();			
+			  let stats = data["records"];
+        // Colonne 4: moyenne
+				//Ici on calcul la moyenne des admis grace aux mentions
+				const mentionpas = stats.fields.acc_mention_nonrenseignee
+				const mentionnull = stats.fields.acc_sansmention
+				const mentionabien = stats.fields.acc_ab
+				const mentionbien = stats.fields.acc_ab
+				const mentiontbien = stats.fields.acc_tb
+				const mentionex = stats.fields.acc_tbf
+
+				//debugging
+				console.log("mentionpas= "+mentionpas)
+				console.log("mentionnull= "+mentionnull)
+				console.log("mentionabien= "+mentionabien)
+				console.log("mentionbien= "+mentionbien)
+				console.log("mentiontbien= "+mentiontbien)
+				console.log("mentionex= "+mentionex)
+				
+
+				/**On admet que :
+				 * mentin inconnue = 10
+				 * sans mention = 10
+				 * mention assez bien = 13
+				 * mention bien = 15
+				 * mention tres bien = 17
+				 * mention excellence = 18
+				 * On calcul ensuite la moyenne de toutes ces
+				 * notes pour obtenir la moyenne des étudiants
+				 * acceptés dans chaque école
+				 **/
+				const moymention = (mentionpas*10+mentionnull*10+mentionabien*13+mentionbien*15+
+				mentiontbien*17+mentionex*19)/(mentionpas+mentionnull+mentionabien+mentionbien+mentiontbien+mentionex);
+				//debugging
+				console.log(moymention);
+        
+      }
     }
 
 
