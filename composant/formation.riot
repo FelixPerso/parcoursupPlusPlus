@@ -1,0 +1,22 @@
+<formation>
+    <div class="box p-1 m-2">
+    <div class="columns m-1">
+        <input class="input" oninput={props.searchF} type="input" placeholder={props.formation}>
+        <button class="button ml-1" disabled="disabled" id="back"></button>
+    </div>    
+        <div id="list-formations">
+            <ul>
+                <li class="m-1"  each={item in props.items}>
+                   <button  onclick={props.selectFormation} data-formation="{item.name}" class="button is-fullwidth p-2" >
+                   <span style="font-size: .75em; max-size: 90%">
+                   <strong>{item.name}</strong>
+                   </span>
+                   <div style="margin-left: auto;"></div>
+                   <span class="tag is-primary">{item.count}</span>
+                   </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+</formation>

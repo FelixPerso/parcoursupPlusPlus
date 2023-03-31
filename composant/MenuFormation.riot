@@ -1,0 +1,27 @@
+<menu-formation>
+  <div class="select">
+    <select onchange="{ updateFormation }">
+      <option value="">Sélectionnez une formation</option>
+      <option each="{ formation in formations }" value="{ formation.id }">{ formation.name }</option>
+    </select>
+  </div>
+
+  <script>
+    export default {
+      data() {
+        return {
+          formations: []
+        }
+      },
+
+      async onMounted() {
+        this.formations = await fetchFormation()
+      },
+
+      updateFormation(e) {
+        this.$dispatch('formation-selected', e.target.value)
+      },
+      
+    }
+  </script>
+</menu-formation>
