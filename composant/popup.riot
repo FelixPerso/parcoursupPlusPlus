@@ -1,3 +1,26 @@
 <popup>
-    
+    <div class="card" style="width: 75%!important;">
+        <div class="card-content">
+            <div class="content">
+            </div>
+        </div>
+    </div>
+    <script>
+        const cells = document.querySelectorAll('.has-card');
+        const card = document.querySelector('.card');
+
+        cells.forEach((cell) => {
+            cell.addEventListener('click', (event) => {
+                const item = event.target.parentNode;
+                const rect = item.getBoundingClientRect();
+                card.style.top = `${rect.top + window.scrollY}px`;
+                card.style.left = `${rect.left + window.scrollX}px`;
+                card.classList.add('is-active');
+            });
+        });
+
+        card.addEventListener('click', () => {
+            card.classList.remove('is-active');
+        });
+    </script>
 </popup>

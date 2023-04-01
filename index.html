@@ -11,6 +11,7 @@
   <script src="./composant/listeEtablissements.riot" type="riot"></script>
   <script src="./composant/statsEtablissements.riot" type="riot"></script>
   <script src="./composant/progressbar.riot" type="riot"></script>
+  <script src="./composant/popup.riot" type="riot"></script>
   <!-- include riot.js and the compiler -->
   <script src="https://unpkg.com/riot@4/riot+compiler.min.js"></script>
   <link rel="stylesheet" href="./css/default.css">
@@ -37,10 +38,10 @@
 
 
     <script>
-    (async function main() {
-      await riot.compile()
-      riot.mount('composant')
-    }())
+      (async function main() {
+        await riot.compile()
+        riot.mount('composant')
+      }())
     </script>
 
   </main>
