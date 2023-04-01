@@ -168,14 +168,11 @@
     export default {
       onBeforeUpdate() {
         this.allselectmoyen()
-        console.log(this.props.records)
       },
       allselectmoyen() {
         if (this.props.records == null)
           return
-        console.log(this.props.records.length)
         this.state.NombreFormation = (this.props.records.length)
-        console.log(this.state.NombreFormation)
         this.state.moymentionall = (this.props.records.reduce((accumulateur, valeur) => accumulateur + parseFloat(valeur.moyenne), 0) / this.props.records.length).toFixed(0)
         this.state.capacite = (this.props.records.reduce((accumulateur, valeur) => accumulateur + valeur.fields.capa_fin, 0) / this.props.records.length).toFixed(0)
         this.state.selectiviteall = (this.props.records.reduce((accumulateur, valeur) => accumulateur + valeur.fields.taux_acces_ens, 0) / this.props.records.length).toFixed(0)
