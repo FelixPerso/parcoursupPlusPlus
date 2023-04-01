@@ -1,11 +1,26 @@
 <progressbar>
- <h3></h3>
-
- <script>
-
-    const h3 = document.querySelector("h3")
-    
-
-
- </script>
+   <ul>
+      <li>
+         <a>{nameForma}</a>
+      </li>
+      <li>
+         <a>{nameFormaTD}</a>
+      </li>
+      <li>
+         <a>{selectedFormation}</a>
+      </li>
+   </ul>
+   <script>
+      export default {
+         onBeforeUpdate() {
+            this.selectNav()
+            
+         },
+         selectNav() {
+            nameForma = querynameForma
+            nameFormaTD = nameFormaTD
+            selectedFormation = selectedFormation
+         }
+      }
+   </script>
 </progressbar>
