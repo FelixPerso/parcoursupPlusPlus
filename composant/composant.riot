@@ -1,4 +1,7 @@
 <composant>
+  <div class="tabs is-centered is-medium ">
+    <progressbar class="column is-full "></progressbar>
+  </div>
   <div class="columns">
     <div class="column is-one-third">
       <formation items={state.items} selectFormation={selectFormation} searchF={searchF} placeholder={placeholder}>
@@ -51,7 +54,7 @@
       },
 
       selectFormation(event) {
-    
+
         const selectedFormation = event.currentTarget.getAttribute('data-formation');
         this.count = event.currentTarget.childNodes[2].outerText
         this.update({
@@ -59,7 +62,7 @@
 
         });
 
-        
+
 
         if (this.clickCounter === 0) {
           this.clickCounter++;
@@ -67,7 +70,7 @@
             this.update({
               items: response
             });
-            
+
 
           });
 
@@ -77,10 +80,11 @@
             this.update({
               items: response
             });
-            
+
           });
-        }else if (this.clickCounter === 2) {
+        } else if (this.clickCounter === 2) {
           resulta = `https://data.enseignementsup-recherche.gouv.fr//api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=${this.count}&refine.fili=${nameForma}&refine.form_lib_voe_acc=${nameFormaTD}&refine.fil_lib_voe_acc=${encodeURIComponent(selectedFormation)}`
+          console.log(resulta)
           this.listeEtablissements().then((response) => {
             this.update({
               table: response
@@ -102,58 +106,59 @@
           case 1:
             resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=form_lib_voe_acc&refine.fili=${queryString}`;
             nameForma = queryString
-     
+            console.log(nameForma)
+
             break;
 
           case 2:
             resulta = `https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-parcoursup&q=&rows=0&facet=fil_lib_voe_acc&refine.fili=${nameForma}&refine.form_lib_voe_acc=${queryString}`;
             nameFormaTD = queryString
+            console.log(nameFormaTD)
             break;
 
         }
-    
+
         let result = await fetch(resulta);
         let resultats = await result.json();
-        
+
         let table = []
-        if(this.clickCounter!=3)
+        if (this.clickCounter != 3)
           table = resultats["facet_groups"][0]["facets"];
 
         return table;
-  
+
 
       },
       async listeEtablissements() {
-      let result = await fetch(resulta)
-			let data = await result.json();			
-			let stats = data["records"];
-      stats = this.newStat(stats);
-			return stats;
-			},
+        let result = await fetch(resulta)
+        let data = await result.json();
+        let stats = data["records"];
+        stats = this.newStat(stats);
+        return stats;
+      },
 
-    newStat(stats){
-    for(statbacandselec of stats){
-				let mentionnull = statbacandselec.fields.acc_sansmention
-				let mentionabien = statbacandselec.fields.acc_ab
-				let mentionbien = statbacandselec.fields.acc_ab
-				let mentiontbien = statbacandselec.fields.acc_tb
-				let mentionex = statbacandselec.fields.acc_tbf
-        let moymention = (mentionnull*10+mentionabien*13+mentionbien*15+
-				mentiontbien*17+mentionex*19)/(mentionnull+mentionabien+mentionbien+mentiontbien+mentionex);
-        let selectivite =  statbacandselec.fields.taux_acces_ens
-        if(!selectivite){
-          selectivite=0
+      newStat(stats) {
+        for (statbacandselec of stats) {
+          let mentionnull = statbacandselec.fields.acc_sansmention
+          let mentionabien = statbacandselec.fields.acc_ab
+          let mentionbien = statbacandselec.fields.acc_ab
+          let mentiontbien = statbacandselec.fields.acc_tb
+          let mentionex = statbacandselec.fields.acc_tbf
+          let moymention = (mentionnull * 10 + mentionabien * 13 + mentionbien * 15 +
+            mentiontbien * 17 + mentionex * 19) / (mentionnull + mentionabien + mentionbien + mentiontbien + mentionex);
+          let selectivite = statbacandselec.fields.taux_acces_ens
+          if (!selectivite) {
+            selectivite = 0
+          }
+          if (!moymention) {
+            moymention = 0
+          }
+          statbacandselec.moyenne = moymention.toFixed(1)
+          statbacandselec.selectivites = selectivite
         }
-        if (!moymention){
-          moymention=0
-        }  
-        statbacandselec.moyenne = moymention.toFixed(1)
-        statbacandselec.selectivites= selectivite
-      }
-      return stats;
-    }
+        return stats;
+      },
 
-    
     }
 
 
