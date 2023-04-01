@@ -6,9 +6,147 @@
     <div class="card-content">
       <div class="content">
         <p>Moyenne des admis : <strong>{state.moymentionall}</strong></p>
+        <p>Nombre de formation : <strong>{state.NombreFormation}</strong></p>
         <p>Capacité : <strong>{state.capacite}</strong></p>
         <p>Sélectivité : <strong>{state.selectiviteall}</strong></p>
       </div>
+      <bar-chart label="Répartition par genre">
+      <div class="bar-chart block m-5">
+      <div class="has-text-centered block is-size-5">
+      <h2 class="is-unselectable">Répartition par genre</h2>
+      </div><div class="is-size-7">
+      <div class="columns is-mobile is-vcentered">
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1"  style="width:{this.state.partdefemme}%;background-color:#003f5c;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.partdefemme}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1"  style="width:{this.state.partdehomme}%;background-color:#f95d6a;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.partdehomme}%</p>
+      </div>
+      </div>
+      <div class="columns is-mobile is-justify-content-center">
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Femme" style="background-color:#003f5c">
+      </span>
+      <span class="is-unselectable">F</span>
+      </span></div><div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Homme" style="background-color:#f95d6a"></span>
+      <span class="is-unselectable">H</span>
+      </span>
+      </div>
+      </div>
+      </div>
+      </div>
+      </bar-chart>
+
+      
+      <bar-chart label="Répartition par bac">
+      <div class="bar-chart block m-5">
+      <div class="has-text-centered block is-size-5">
+      <h2 class="is-unselectable">Répartition par bac</h2>
+      </div><div class="is-size-7">
+      <div class="columns is-mobile is-vcentered">
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1"  style="width:{state.bacgeneral}%;background-color:#003f5c;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.bacgeneral}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1"  style="width:{state.bactechno}%;background-color:#2f4b7c;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.bactechno}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1"  style="width:{state.bacpro}%;background-color:#665191;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.bacpro}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1"  style="width:{state.bacAutre}%;background-color:#a05195;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.bacAutre}%</p>
+      </div>
+      </div>
+      <div class="columns is-mobile is-justify-content-center">
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Général" style="background-color:#003f5c"></span>
+      <span class="is-unselectable">Gen</span>
+      </span>
+      </div>
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Technologique" style="background-color:#2f4b7c"></span>
+      <span class="is-unselectable">Tech</span>
+      </span>
+      </div>
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Professionnel" style="background-color:#665191"></span>
+      <span class="is-unselectable">Pro</span>
+      </span>
+      </div>
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Autre" style="background-color:#a05195"></span>
+      <span class="is-unselectable">Aut</span>
+      </span>
+      </div>
+      </div>
+      </div>
+      </div>
+      </bar-chart>
+
+      <div class="bar-chart block m-5">
+      <div class="has-text-centered block is-size-5">
+      <h2 class="is-unselectable">Répartition par mention au bac</h2>
+      </div>
+      <div class="is-size-7">
+      <div class="columns is-mobile is-vcentered">
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{state.mentionpassable}%;background-color:#003f5c;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.mentionpassable}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{state.mentionassezbien}%;background-color:#2f4b7c;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.mentionassezbien}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{state.mentionbien}%;background-color:#665191;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.mentionbien}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{state.mentiontresbien}%;background-color:#a05195;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.mentiontresbien}%</p>
+      </div>
+      <div class="column is-narrow ml-1 mr-1 p-0 is-flex-shrink-1" style="width:{state.mentiontresbienfelicitation}%;background-color:#f95d6a;">
+      <p class="has-text-centered m-1 has-text-white is-unselectable">{state.mentiontresbienfelicitation}%</p>
+      </div>
+      </div>
+      <div class="columns is-mobile is-justify-content-center">
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Passable" style="background-color:#003f5c"></span>
+      <span class="is-unselectable">P</span>
+      </span>
+      </div>
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Assez Bien" style="background-color:#2f4b7c"></span>
+      <span class="is-unselectable">AB</span>
+      </span>
+      </div>
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Bien" style="background-color:#665191"></span>
+      <span class="is-unselectable">B</span>
+      </span>
+      </div>
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Très Bien" style="background-color:#a05195"></span>
+      <span class="is-unselectable">TB</span>
+      </span>
+      </div>
+      <div class="column is-narrow">
+      <span class="icon-text">
+      <span class="icon" title="Très Bien avec Félicitation du jury" style="background-color:#f95d6a"></span>
+      <span class="is-unselectable">TBF</span>
+      </span>
+      </div>
+      </div>
+      </div>
+      </div>
+
     </div>
   </div>
   <script>
@@ -20,9 +158,23 @@
       allselectmoyen(){
         if(this.props.records == null)
         return
+        console.log(this.props.records.length)
+        this.state.NombreFormation=(this.props.records.length)
+        console.log(this.state.NombreFormation)
         this.state.moymentionall=(this.props.records.reduce((accumulateur,valeur)=>accumulateur+parseFloat(valeur.moyenne),0)/this.props.records.length).toFixed(0)
         this.state.capacite=(this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.capa_fin,0)/this.props.records.length).toFixed(0)
         this.state.selectiviteall=(this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.taux_acces_ens,0)/this.props.records.length).toFixed(0)
+        this.state.partdefemme=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_f,0)/this.props.records.length)).toFixed(0)
+        this.state.partdehomme=(100-this.state.partdefemme)
+        this.state.bacgeneral=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_bg,0)/this.props.records.length)).toFixed(0)
+        this.state.bactechno=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_bt,0)/this.props.records.length)).toFixed(0)
+        this.state.bacpro=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_bp,0)/this.props.records.length)).toFixed(0)
+        this.state.bacAutre=(100-this.state.bacgeneral-this.state.bactechno-this.state.bacpro)
+        this.state.mentionpassable=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_sansmention,0)/this.props.records.length)).toFixed(0)
+        this.state.mentionassezbien=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_ab,0)/this.props.records.length)).toFixed(0)
+        this.state.mentionbien=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_b,0)/this.props.records.length)).toFixed(0)
+        this.state.mentiontresbien=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_tb,0)/this.props.records.length)).toFixed(0)
+        this.state.mentiontresbienfelicitation=((this.props.records.reduce((accumulateur,valeur)=>accumulateur+valeur.fields.pct_tbf,0)/this.props.records.length)).toFixed(0)
       }
     }
 
